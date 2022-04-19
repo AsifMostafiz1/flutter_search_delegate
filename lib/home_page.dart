@@ -64,6 +64,9 @@ class ProductSearchDelegate extends SearchDelegate {
     return suggestionList.isEmpty?const Center(child: Text("No Product Found"),) :ListView.builder(
       itemBuilder: (context, index) {
         final product = suggestionList[index];
+        final queryText = product.title.substring(0,query.length);
+        final remainingText = product.title.substring(query.length);
+
 
 
         return GestureDetector(
@@ -91,10 +94,24 @@ class ProductSearchDelegate extends SearchDelegate {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 30.0),
-                      child: Text(
-                        product.title,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
+                      child: RichText(
+                        text: TextSpan(
+                          text: queryText,
+                          style: const TextStyle(
+                            color: Colors.amber,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: remainingText,
+                              style: const TextStyle(
+                                color: Colors.black54,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     flex: 2,
